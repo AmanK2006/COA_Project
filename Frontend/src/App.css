@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap");
+
+:root {
+  --bg-primary: #0a0c10;
+  --bg-secondary: #0f1318;
+  --bg-panel: #12161d;
+  --bg-panel-hover: #161b24;
+  --border: #1e2a38;
+  --border-bright: #2a3a50;
+  --accent: #00d4ff;
+  --accent-dim: #0099bb;
+  --accent-glow: rgba(0, 212, 255, 0.15);
+  --accent-green: #00ff9d;
+  --accent-green-dim: rgba(0, 255, 157, 0.12);
+  --accent-red: #ff4560;
+  --accent-red-dim: rgba(255, 69, 96, 0.12);
+  --text-primary: #e8edf5;
+  --text-secondary: #7a8fa8;
+  --text-muted: #3d5068;
+  --text-mono: #a8c4dc;
+  --font-mono: "Share Tech Mono", monospace;
+  --font-ui: "Rajdhani", sans-serif;
+  --radius: 4px;
+  --transition: 0.18s ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Subtle scanline overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app__main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem 2rem;
+  flex: 1;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  .app__main {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+}
