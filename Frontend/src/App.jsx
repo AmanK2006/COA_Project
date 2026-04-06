@@ -25,7 +25,6 @@ function App() {
         }),
       });
 
-      // Safer JSON parsing
       let data;
       try {
         data = await response.json();
@@ -36,7 +35,7 @@ function App() {
       if (!response.ok) {
         setError(data.error || "Assembly failed.");
       } else {
-        setOutput(data);
+        setOutput(data); // ✅ SHOW OUTPUT IN PANEL
       }
     } catch (err) {
       setError("Could not reach the server. Is Flask running?");
@@ -44,6 +43,25 @@ function App() {
       setLoading(false);
     }
   };
+
+  const handleDownload = () => {
+  if (!output) return;
+
+  const text = output?.instructions?.join("\n") || "";
+  const ext = output.format === "hex" ? "hex" : "bin";
+
+  const blob = new Blob([text], { type: "application/octet-stream" }); // ✅ better type
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+
+  // ✅ FIXED (removed .txt)
+  a.download = `output_machine.${ext}`;
+
+  a.click();
+  URL.revokeObjectURL(url);
+};
 
   return (
     <div className="app">
@@ -61,6 +79,7 @@ function App() {
           output={output}
           error={error}
           loading={loading}
+          onDownload={handleDownload}
         />
       </main>
     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./OutputPanel.css";
 
-function OutputPanel({ output, error, loading }) {
+function OutputPanel({ output, error, loading , onDownload }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -11,19 +11,6 @@ function OutputPanel({ output, error, loading }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     });
-  };
-
-  const handleDownload = () => {
-    if (!output) return;
-    const text = output?.instructions?.join("\n") || ""
-    const ext = output.format === "hex" ? "hex" : "bin";
-    const blob = new Blob([text], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `output_machine.${ext}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
   };
 
   const isEmpty = !output && !error && !loading;
@@ -45,7 +32,7 @@ function OutputPanel({ output, error, loading }) {
             <button className="icon-btn" onClick={handleCopy} title="Copy to clipboard">
               {copied ? "✔ Copied" : "⎘ Copy"}
             </button>
-            <button className="icon-btn icon-btn--accent" onClick={handleDownload} title="Download file">
+            <button className="icon-btn icon-btn--accent" onClick={onDownload} title="Download file">
               ↓ Download
             </button>
           </div>
@@ -62,7 +49,7 @@ function OutputPanel({ output, error, loading }) {
             </div>
             <p className="output-panel__state-text">Assembling...</p>
           </div>
-        )}
+        )} 
 
         {!loading && error && (
           <div className="output-panel__state">
