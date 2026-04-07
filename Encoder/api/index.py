@@ -9,15 +9,27 @@ sys.path.append(BASE_DIR)
 from src.encoder import assemble_text
 
 app = Flask(__name__)
-CORS(
-    app,
-    resources={r"/api/*": {"origins": "*"}},
-    supports_credentials=True
-)
+CORS(app)
+
+@app.after_request
+def after_request(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    return response
 
 @app.route("/api")
 def home():
     return "Server is running"
+
+# Handle preflight
+@app.route("/api/assemble", methods=["OPTIONS"])
+def handle_options():
+    response = jsonify({"message": "ok"})
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    response.headers["Access-Control-Allow-Methods"] = "POST, OPTIONS"
+    return response
 
 @app.route("/api/assemble", methods=["POST"])
 def assemble():
