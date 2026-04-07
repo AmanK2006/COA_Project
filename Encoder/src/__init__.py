@@ -1,0 +1,1 @@
+from .encoder import assemble_text
