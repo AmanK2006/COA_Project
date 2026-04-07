@@ -4,6 +4,8 @@ import InputPanel from "./Components/InputPanel";
 import OutputPanel from "./Components/OutputPanel";
 import Header from "./Components/Header";
 
+
+
 function App() {
   const [output, setOutput] = useState(null);
   const [error, setError] = useState(null);
@@ -16,7 +18,8 @@ function App() {
     setOutput(null);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/assemble", {
+      const url = process.env.REACT_APP_BACKEND_URL;
+      const response = await fetch(`${url}/assemble`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
