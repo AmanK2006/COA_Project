@@ -3,7 +3,6 @@ from flask_cors import CORS
 from flask import send_file
 import sys
 import os
-import io
 
 # Allow importing encoder from the same directory
 sys.path.insert(0, os.path.dirname(__file__))
