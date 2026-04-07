@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask import send_file
 import sys
 import os
 
@@ -12,12 +11,11 @@ from src.encoder import assemble_text
 app = Flask(__name__)
 CORS(app)
 
-
-@app.route("/")
+@app.route("/api")
 def home():
     return "Server is running"
 
-@app.route("/assemble", methods=["POST"])
+@app.route("/api/assemble", methods=["POST"])
 def assemble():
     data = request.get_json()
 
@@ -40,5 +38,6 @@ def assemble():
         return jsonify({"error": str(e)}), 500
 
 
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+# REQUIRED FOR VERCEL
+def handler(request):
+    return app(request.environ, lambda status, headers: None)
