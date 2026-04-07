@@ -9,7 +9,11 @@ sys.path.append(BASE_DIR)
 from src.encoder import assemble_text
 
 app = Flask(__name__)
-CORS(app)
+CORS(
+    app,
+    resources={r"/api/*": {"origins": "*"}},
+    supports_credentials=True
+)
 
 @app.route("/api")
 def home():
