@@ -18,8 +18,7 @@ function App() {
     setOutput(null);
 
     try {
-      const url = process.env.REACT_APP_BACKEND_URL;
-      const response = await fetch(`${url}/assemble`, {
+      const response = await fetch(`/api/assemble`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
